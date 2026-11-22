@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
 @section('title', 'Masuk - ' . config('app.name', 'FinanceKu'))
 
