@@ -18,7 +18,7 @@ Aplikasi web **personal finance tracker** berbasis mobile-first untuk penggunaan
   - `transactions` (`category_id`, `type`, `amount`, `note`, `transaction_date`) + relasi `belongsTo` ke kategori
   - `budgets` (`period_type`, `amount`, `is_dynamic`, `start_date`, `end_date`)
 - **Seeder Awal:** Akun default serta kategori awal untuk **Expense** (*Makan & Minum*, *Transportasi*, *Belanja*, *Tagihan*, *Lainnya*) dan **Income** (*Gaji*, *Bonus*, *Freelance*, *Lainnya*).
-
+ 
 ## Instalasi & Setup Lokal
 
 1. **Clone repositori & install dependensi:**
