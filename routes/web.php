@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,9 +13,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/', [DashboardController::class, 'index'])->name('home');
+    Route::redirect('/dashboard', '/');
 
     Route::resource('transactions', TransactionController::class)
         ->only(['index', 'store', 'edit', 'update', 'destroy']);

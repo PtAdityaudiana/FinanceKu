@@ -6,15 +6,21 @@ use App\Http\Requests\Transaction\StoreTransactionRequest;
 use App\Http\Requests\Transaction\UpdateTransactionRequest;
 use App\Models\Category;
 use App\Models\Transaction;
+use App\Services\FinanceSummaryService;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class TransactionController extends Controller
 {
+    public function __construct(
+        private readonly FinanceSummaryService $summaryService,
+    ) {}
+
     /**
      * Indonesian short month names mapped by month number.
      *
@@ -102,7 +108,10 @@ class TransactionController extends Controller
      */
     public function store(StoreTransactionRequest $request): RedirectResponse
     {
-        Transaction::create($request->validated());
+        DB::transaction(function () use ($request): void {
+            Transaction::create($request->validated());
+            $this->summaryService->recordDailyActivity($request->user());
+        });
 
         return back()->with('success', 'Transaksi berhasil dicatat.');
     }
